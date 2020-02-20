@@ -31,7 +31,7 @@ try {
   
   let accounts = await web3.eth.getAccounts();
   
-  await ico.methods.endSale().send( {from: accounts[0]} );
+  //await ico.methods.endSale().send( {from: accounts[0]} );
   await ico.methods.buyTokens().send({
     from: accounts[0],
     value: web3.utils.toWei(this.state.value, 'ether')

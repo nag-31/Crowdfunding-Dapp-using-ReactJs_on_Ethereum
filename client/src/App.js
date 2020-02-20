@@ -143,7 +143,7 @@ class App extends Component {
         <nav>
           <a href="/" className="titleICO">
             <i className="material-icons">group_work</i>
-            <div>DEMOICO</div>
+            <div>CrowdFundToken1</div>
           </a>
           <div className="middleNav">
             <a onClick={() => scrollToComponent(this.About, { offset: -70, align: 'top', duration: 1500})}><Button>About</Button></a>
@@ -159,7 +159,7 @@ class App extends Component {
             <div className="myAccountBox">
               <div className="address">{"ADDRESS: " + this.state.accounts[0]}</div>
               <div className="eth">{"My Ether: " + this.state.myEther}</div>
-              <div className="dctoken">{"My DC: " + this.state.myBalance}</div>
+              <div className="dctoken">{this.state.symbol+" : " + this.state.myBalance}</div>
             </div>
           </div>
 
