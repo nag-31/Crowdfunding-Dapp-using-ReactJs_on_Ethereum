@@ -40,6 +40,7 @@ library SafeMath {
 contract ICO is ERC20Interface {
     using SafeMath for uint;
     
+    //string public name;
     string public name;
     string public about;
     string public whitepaper;
@@ -71,17 +72,19 @@ contract ICO is ERC20Interface {
         icoStarts = now ;
         allTokens = 10000000000000000000;
         admin = (msg.sender);
-        balances[msg.sender] = allTokens;
+        balances[msg.sender] = allTokens.div(5);
+        allcontributors=1;
+        
         
     }
     
         function buyTokens() public payable{
             uint tokens;
             if (now <= bonusEnds){
-                tokens=msg.value.mul(110);
+                tokens=msg.value.mul(1100);
             }
             else{
-                tokens = msg.value*100;    
+                tokens = msg.value*1000;    
             }
             
             balances[msg.sender] = balances[msg.sender].add(tokens);

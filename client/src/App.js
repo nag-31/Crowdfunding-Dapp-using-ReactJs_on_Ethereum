@@ -17,7 +17,7 @@ import scrollToComponent from 'react-scroll-to-component';
 
 
 class App extends Component {
-
+  
   
   state = { storageValue: 0, web3: null, accounts: null, contract: null,contract2:null,myvalue:null,
     myBalance: '88888',
@@ -26,7 +26,11 @@ class App extends Component {
     accounts:[],
     whitepaper:'',
     roadmap:'',
-    team:''
+    team:'',
+    contributers: '',
+    totalSupply: '',
+    days:'',
+    symbol:''
   };
 
   componentDidMount = async () => {
@@ -40,7 +44,7 @@ class App extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = SimpleStorageContract.networks[networkId];
+      const deployedNetwork = SimpleStorageContract.networks[networkId] ;
       const instance = new web3.eth.Contract(
         SimpleStorageContract.abi,
         deployedNetwork && deployedNetwork.address,
@@ -56,12 +60,12 @@ class App extends Component {
       // example of interacting with the contract's methods.
       
       
-      let myBalance = await instance2.methods.myBalance().call().then(console.log(myBalance));
+      let myBalance = await instance2.methods.myBalance().call({ from: accounts[0] });
       myBalance = web3.utils.fromWei(myBalance, 'ether');
       
       
       let myBalanceEther = await web3.eth.getBalance(accounts[0]);
-      myBalanceEther = web3.utils.fromWei(myBalanceEther, 'ether');
+      myBalanceEther = web3.utils.fromWei(myBalanceEther, 'ether'); 
       let myEther = myBalanceEther;
       
       this.setState({myBalance, myEther});
@@ -85,19 +89,28 @@ class App extends Component {
   };
 
   runExample = async () => {
-    const { accounts, contract,contract2 } = this.state;
+    const { accounts, contract,contract2 ,web3} = this.state;
 
     // Stores a given value, 5 by default.
     //await contract.methods.set(5).send({ from: accounts[0] });
     // Get the value from the contract to prove it worked.
     const response = await contract.methods.get().call();
-    const response2 = await contract2.methods.symbol().call();
+    const symbol = await contract2.methods.symbol().call();
     const whitepaper = await  contract2.methods.whitepaper().call();
     const roadmap = await  contract2.methods.roadmap().call();
     const team = await  contract2.methods.team().call();
+    //const contributers = await contract2.methods.allcontributers().call();
+    let totalSupply = await  contract2.methods.totalSupply().call();
+    totalSupply=totalSupply.toString();
+    //const web3 = await getWeb3();
+    totalSupply = web3.utils.fromWei(totalSupply, 'ether');
+
 
     // Update state with the result.
-    this.setState({ storageValue: response,myvalue:response2 ,whitepaper,roadmap,team });
+    this.setState({ storageValue: response,symbol ,whitepaper,roadmap,team,
+      //contributers 
+      totalSupply
+    });
 
    
 
@@ -121,18 +134,18 @@ class App extends Component {
           Try changing the value stored on <strong>line 40</strong> of App.js.
         </p>
         <div>The stored value is: {this.state.storageValue}</div>
-        <div>The my value is: {this.state.myvalue}</div>
+        <div>The synbol is: {this.state.symbol}</div>
         <div>The my2 value is: {this.state.whitepaper}</div>
         <div>The my2 value is: {this.state.roadmap}</div>
-      
-
+        <div>The contributers is: {this.state.contributers}</div>
+        <div>The TOTAL SUPPLY  is: {this.state.totalSupply}</div>
         <div>
         <nav>
-          <a href="/" class="titleICO">
-            <i class="material-icons">group_work</i>
+          <a href="/" className="titleICO">
+            <i className="material-icons">group_work</i>
             <div>DEMOICO</div>
           </a>
-          <div class="middleNav">
+          <div className="middleNav">
             <a onClick={() => scrollToComponent(this.About, { offset: -70, align: 'top', duration: 1500})}><Button>About</Button></a>
             <a onClick={() => scrollToComponent(this.Whitepaper, { offset: -70, align: 'top', duration: 1500})}><Button>Whitepaper</Button></a>
             <a onClick={() => scrollToComponent(this.Roadmap, { offset: -70, align: 'top', duration: 1500})}><Button>Roadmap</Button></a>
@@ -140,23 +153,23 @@ class App extends Component {
             <a onClick={() => scrollToComponent(this.Team, { offset: -70, align: 'top', duration: 1500})}><Button>Team</Button></a>
           </div>
 
-          <div class="rightNav">
-            <i class="material-icons">account_box</i>
+          <div className="rightNav">
+            <i className="material-icons">account_box</i>
 
-            <div class="myAccountBox">
-              <div class="address">{"ADDRESS: " + this.state.accounts[0]}</div>
-              <div class="eth">{"My Ether: " + this.state.myEther}</div>
-              <div class="dctoken">{"My DC: " + this.state.myBalance}</div>
+            <div className="myAccountBox">
+              <div className="address">{"ADDRESS: " + this.state.accounts[0]}</div>
+              <div className="eth">{"My Ether: " + this.state.myEther}</div>
+              <div className="dctoken">{"My DC: " + this.state.myBalance}</div>
             </div>
           </div>
 
         </nav>
 
-        <div id="startDiv"> <Start/> </div>
+        <div id="startDiv"> <Start web3= { this.state.web3} ico= {this.state.contract2} /> </div>
         <div ref={(section) => { this.About = section; }}><About/></div>
         <div ref={(section) => { this.Whitepaper = section; }}> <Whitepaper link = {this.state.whitepaper} /> </div>
         <div ref={(section) => { this.Roadmap = section; }}> <Roadmap link1={ this.state.roadmap} /> </div>
-        <div ref={(section) => { this.Contribute = section; }}> <Contribute/> </div>
+        <div ref={(section) => { this.Contribute = section; }}> <Contribute web3= { this.state.web3} ico= {this.state.contract2}  /> </div>
         <div ref={(section) => { this.Team = section; }}> <Team team={this.state.team} /> </div>
 
       </div>
