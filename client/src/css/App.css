@@ -60,7 +60,7 @@ nav {
 .container {
   background-color: #1954F0;
   width: 100%;
-  background-image: radial-gradient(circle farthest-corner at 50% 50%, #39f, #339);
+  background-image: radial-gradient(circle farthest-corner at 50% 50%, rgb(96, 113, 129), rgb(29, 29, 32));
   padding-bottom: 25px;
 }
 

@@ -54,6 +54,7 @@ componentDidMount = async () =>{
   let minutes = date.getMinutes();
   let seconds = date.getSeconds();
   //console.log("component did mount");
+  
 
   this.setState({
      
@@ -69,11 +70,11 @@ componentDidMount = async () =>{
 
         <div className="container">
           <div className="containerMiddle">
-            <div className="header1">#ICO Landing page for your cryptocurrency project</div>
+            <div className="header1"># Landing page for your  project</div>
             <div className="flex">
               <div className="textArea">
-                <div>Decentralized Demo Platform for ICO Developers, Advisors, Crypto-Experts
-                     and Investors. </div>
+                <div>Decentralized CrowdFunding  Platform for Creators, Innovators, Start-ups and Investors who are looking to raise money
+                      </div>
                 <div className="buttonContainer">
                   <div> <Button variant="contained" color="primary"> SIGN UP TO JOIN </Button> </div>
                 </div>

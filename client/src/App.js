@@ -68,13 +68,13 @@ class App extends Component {
       myBalanceEther = web3.utils.fromWei(myBalanceEther, 'ether'); 
       let myEther = myBalanceEther;
       
-      this.setState({myBalance, myEther});
+      //this.setState({myBalance, myEther});
 
       
 
      
       
-      this.setState({ web3, accounts, contract: instance,contract2:instance2,myBalance }, this.runExample);
+      this.setState({ web3, accounts, contract: instance,contract2:instance2,myBalance,myEther }, this.runExample);
 
       
   
