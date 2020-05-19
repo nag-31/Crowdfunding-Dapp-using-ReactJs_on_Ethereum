@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import Button from '@material-ui/core/Button';
 import { Player, BigPlayButton, ControlBar } from 'video-react';
 import scrollToComponent from 'react-scroll-to-component';
-import App from '../App';
+import App from '../App2';
+import   ButtonB  from 'react-bootstrap/Button';
+
 
 //import getWeb3 from '../getWeb3';
 //import ico from "../contracts/ICO.json"; 
@@ -16,7 +18,7 @@ class Start extends Component {
 
 
     this.state = {
-      contributers: '11',
+      contributers: '0',
       totalSupply: '11',
       days:'11',
       hours:'11',
@@ -38,22 +40,34 @@ componentDidMount = async () =>{
   totalSupply = web3.utils.fromWei(totalSupply.toString(), 'ether');
   //console.log("totalSupply");
 
-  let icoEndTime = await ico.methods.icoEnds().call();
-  //console.log(icoEndTime)
-  //let timeNow = Math.round((new Date()).getTime() / 1000);
-  let timeNow = new Date().getTime(); 
-  //console.log(timeNow)
+   let icoEndTime = await ico.methods.icoEnds().call()*1000;
+  let timeNow = Math.round((new Date()).getTime() );
   let timeLeft = icoEndTime - timeNow;
-  console.log(timeLeft);
+
   let date = new Date(timeLeft);
-  //date=Date.parse(date.toString());
-  console.log(date);
+
+
   let days = date.getDate();
-  console.log(days);
   let hours = date.getHours();
   let minutes = date.getMinutes();
   let seconds = date.getSeconds();
-  //console.log("component did mount");
+
+  // let icoEndTime = await ico.methods.icoEnds().call();
+  // //console.log(icoEndTime)
+  // //let timeNow = Math.round((new Date()).getTime() / 1000);
+  // let timeNow = new Date().getTime(); 
+  // //console.log(timeNow)
+  // let timeLeft = icoEndTime - timeNow;
+  // console.log(timeLeft);
+  // let date = new Date(timeLeft/10);
+  // //date=Date.parse(date.toString());
+  // console.log(date);
+  // let days = date.getDate();
+  // console.log(days);
+  // let hours = date.getHours();
+  // let minutes = date.getMinutes();
+  // let seconds = date.getSeconds();
+  // //console.log("component did mount");
   
 
   this.setState({
@@ -68,7 +82,7 @@ componentDidMount = async () =>{
     return (
       <div>
 
-        <div className="container">
+        <div className="containerStart">
           <div className="containerMiddle">
             <div className="header1"># Landing page for your  project</div>
             <div className="flex">
@@ -76,7 +90,15 @@ componentDidMount = async () =>{
                 <div>Decentralized CrowdFunding  Platform for Creators, Innovators, Start-ups and Investors who are looking to raise money
                       </div>
                 <div className="buttonContainer">
-                  <div> <Button variant="contained" color="primary"> SIGN UP TO JOIN </Button> </div>
+                  <br/>
+                  <a href="/form" target="_blank" >
+                  <div> <ButtonB  variant="outline-danger"> Click to register your Project </ButtonB> </div>
+                  </a>
+                  <br/>
+                  <a href="/listing" target="_blank" >
+                  <div> <ButtonB  variant="outline-success"> View all available Projects </ButtonB> </div>
+                  </a>
+                  
                 </div>
               </div>
 
@@ -95,7 +117,7 @@ componentDidMount = async () =>{
                   <div className="contributors">Contributers:<b> {this.state.contributers}</b></div>
                 </div>
                 <div className="totalSuppy"> {this.state.totalSupply}<b>  {this.state.symbol} </b></div>
-                <div ><Button variant="contained" color="primary" onClick={() => scrollToComponent(this.Contribute, { offset: -70, align: 'top', duration: 1500})}>BUY TOKENS | 25% Bonus</Button></div>
+                <div ><Button variant="contained" color="primary" onClick={() => scrollToComponent(this.Contribute, { offset: -70, align: 'top', duration: 1500})}>BUY TOKENS | 10% Bonus</Button></div>
               </div>
 
               <div className="tokenSaleRightSide">

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ButtonB from 'react-bootstrap/Button'
 
 //import web3 from '../getWeb3';
 //import ico from '../contracts/ICO';
@@ -18,10 +19,26 @@ state = {
   errorMessage:'',
   web3:this.props.web3,
   ico:this.props.ico,
+  refundAvailable:false
 }
+
+refundHandler = async (e) => {
+  try{
+    let accounts = await this.state.web3.eth.getAccounts();
+
+  this.state.ico.methods.refund().call({from: accounts[0]});
+  this.setState({refundAvailable:false});
+  }
+  catch(error){
+    this.setState({errorMessage: "ERROR "+ error.message, statusLoading:false, success:false, statusError:true  });
+  }
+  
+}
+
 
 onSubmit = async event => {
   event.preventDefault();
+
 
 try {
   this.setState({statusError: false, statusLoading:true});
@@ -36,7 +53,7 @@ try {
     from: accounts[0],
     value: web3.utils.toWei(this.state.value, 'ether')
   });
-  this.setState({statusLoading:false, success:true});
+  this.setState({statusLoading:false, success:true,refundAvailable:true});
 }catch(err) {
   this.setState({errorMessage: "ERROR "+ err.message, statusLoading:false, success:false, statusError:true  });
 }
@@ -54,13 +71,31 @@ try {
               <div class="buyCoins">
                 <div class="amountToBuy">Amount of ether to buy:</div>
                 <TextField value={this.state.value} onChange= {event => this.setState({value:event.target.value})}> </TextField>
-                <div> ≈ {this.state.value * 124} DC </div>
-                <div class="etherDC"> (1 ETH ≈ 100 + 25 (Bonus) DC) </div>
+                <div> ≈ {this.state.value * 110} WRX </div>
+                <div class="etherDC"> (1 ETH ≈ 100 + 10 (Bonus) WRX) </div>
               </div>
-              <div class="buttonBuy">
-                <Button type="submit" variant="contained" color="primary" value="Submit">Buy DC Tokens | 25% Bonus </Button>
+              <div class="buttonBuy"> 
+                <ButtonB type="submit" variant="success"  value="Submit">Buy  Tokens | 10% Bonus </ButtonB>
               </div>
+              <hr/>
+              
             </form>
+
+            {/* {this.state.refundAvailable ? (
+            <div >
+              <Button  variant="contained" color="primary" onClick={(e) => { this.refundHandler(e) } } >
+                Refund
+              </Button>
+            </div>)
+            : null} */}
+            <div className='center-align'>
+              <ButtonB  variant="danger"  onClick={(e) => { this.refundHandler(e) } } >
+                Refund
+              </ButtonB>
+            </div>
+            
+
+
 
 
             {this.state.statusError ? (
@@ -81,7 +116,7 @@ try {
             : null}
 
             {this.state.success ? (
-            <div class="flex successfully">You successfully bought DC Coins!</div>)
+            <div class="flex successfully">You successfully bought WRX Coins!</div>)
             : null}
 
         </div>

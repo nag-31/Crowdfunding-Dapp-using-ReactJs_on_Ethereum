@@ -12,8 +12,19 @@ import Whitepaper from './components/Whitepaper';
 import Roadmap from './components/Roadmap';
 import Contribute from './components/Contribute';
 import Team from './components/Team';
-import scrollToComponent from 'react-scroll-to-component';
+import Testblock from './components/Testblock';
+import CreateForm from './components/Form';
+import Listing from './components/Listing'
 
+import scrollToComponent from 'react-scroll-to-component';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
 
 
 class App extends Component {
@@ -30,10 +41,28 @@ class App extends Component {
     contributers: '',
     totalSupply: '',
     days:'',
-    symbol:''
+    symbol:'',
+
+    state_1:{
+      storageValue: 0, 
+       myvalue:null,
+      
+      myBalance: '',
+      
+      myAddress: '',
+      
+      whitepaper:'',
+      roadmap:'',
+      team:'',
+      contributers: '',
+      totalSupply: '',
+      days:'',
+      symbol:''
+      }
+  
   };
 
-  componentDidMount = async () => {
+  componentWillMount = async () => {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
@@ -75,7 +104,10 @@ class App extends Component {
      
       
       this.setState({ web3, accounts, contract: instance,contract2:instance2,myBalance,myEther }, this.runExample);
-
+      let state_1=this.state;
+      state_1.state_1="i changed";
+      this.setState({state_1:state_1});
+      console.log(this.state.state_1,"state copy ");
       
   
 
@@ -107,7 +139,7 @@ class App extends Component {
 
 
     // Update state with the result.
-    this.setState({ storageValue: response,symbol ,whitepaper,roadmap,team,
+    this.setState({ storageValue: response , symbol , whitepaper , roadmap , team ,
       //contributers 
       totalSupply
     });
@@ -122,28 +154,27 @@ class App extends Component {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
     return (
-      <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 40</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
-        <div>The synbol is: {this.state.symbol}</div>
-        <div>The my2 value is: {this.state.whitepaper}</div>
-        <div>The my2 value is: {this.state.roadmap}</div>
-        <div>The contributers is: {this.state.contributers}</div>
-        <div>The TOTAL SUPPLY  is: {this.state.totalSupply}</div>
+      <Router>
+        <Route path="/form">
+          <CreateForm/>
+
+        </Route>
+
+        
+        <Route path="/Listing">
+          <Listing web3= { this.state.web3} ico= {this.state.contract2}  />
+
+        </Route>
+
+        <Route path="/home">
+        <div className="App">
+       {/* <Testblock  state_1={this.state.state_1} web3={this.state.web3} ico1={this.state.contract2} /> */}
+ 
         <div>
         <nav>
           <a href="/" className="titleICO">
             <i className="material-icons">group_work</i>
-            <div>CrowdFundToken1</div>
+            <div>CrowdFundToken</div>
           </a>
           <div className="middleNav">
             <a onClick={() => scrollToComponent(this.About, { offset: -70, align: 'top', duration: 1500})}><Button>About</Button></a>
@@ -178,7 +209,12 @@ class App extends Component {
       
       </div>
 
-    );
+
+
+        </Route>
+        
+     </Router>
+          );
   }
 }
 

@@ -57,7 +57,7 @@ nav {
   font-size:12px;
 }
 
-.container {
+.containerStart {
   background-color: #1954F0;
   width: 100%;
   background-image: radial-gradient(circle farthest-corner at 50% 50%, rgb(96, 113, 129), rgb(29, 29, 32));
@@ -365,4 +365,28 @@ nav {
   justify-content: center;
   color: black;
   opacity: 0.77;
+}
+/* url('https://cdn.crowdfunder.co.uk/platform/img/how_it_works/video-cover.jpg'); */
+#jumbotronForm {
+  background-image: url('https://www.bajajfinservmarkets.in/discover/wp-content/uploads/2019/12/Buyers-Guide-Ulip.png');
+  background-size: cover;
+  height: 100%;
+}
+
+#jumbotronListing {
+  background-image: url('https://images.theconversation.com/files/228302/original/file-20180718-142417-iab3b0.png');
+  background-size: fit;
+  height: 100%;
+}
+
+#headerListing {
+  background-image: url('https://sugarcreek.net/wp-content/uploads/REACH-Header-Blue-Background.jpg');
+  background-size: fit;
+  height: 100%;
+}
+
+
+#homeListing {
+  color:white;
+  justify-content: center;
 }
